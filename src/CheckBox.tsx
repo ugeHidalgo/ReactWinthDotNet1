@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 
 interface Props {
   label: string;
-  value: boolean;
+  value?: boolean;
 }
 
-export const CheckBox = ({ label, value }: Props) => {
+export const CheckBox = ({ label, value = false }: Props) => {
   const [checked, setChecked] = useState(value);
 
   const handleCheck = () => {

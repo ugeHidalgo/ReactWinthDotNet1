@@ -9,11 +9,9 @@ import { QuestionList } from './QuestionList';
 export const HomePage = () => {
   const [questions, setQuestions] = useState<QuestionData[]>([]);
   const [questionsLoading, setQuestionsLoading] = useState(true);
-  const [buttonState, setButtonState] = useState(false);
 
   const clickQuestionButton = () => {
     console.log('Changing button state.');
-    setButtonState(!buttonState);
   };
 
   React.useEffect(() => {
@@ -32,7 +30,7 @@ export const HomePage = () => {
         <div>
           <PageTitle>Unanswered questions</PageTitle>
           <button onClick={clickQuestionButton}>Ask a question</button>
-          <CheckBox label="My checkbox" value={buttonState} />
+          <CheckBox label="My checkbox" />
         </div>
         {questionsLoading ? (
           <div>Loading...</div>
