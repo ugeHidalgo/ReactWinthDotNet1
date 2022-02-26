@@ -1,3 +1,4 @@
+import styles from './Header.module.css';
 import React from 'react';
 import { UserIcon } from './Icons';
 
@@ -7,7 +8,7 @@ export const Header = () => {
     console.log(e.currentTarget.value);
   };
   return (
-    <div>
+    <div className={styles.container}>
       <a href="./">Q & A </a>
       <input
         type="text"
