@@ -2,7 +2,14 @@
 import { css } from '@emotion/react';
 import React from 'react';
 import { UserIcon } from './Icons';
-import { fontFamily, fontSize, gray1, gray2, gray5 } from './Styles';
+import {
+  fontFamily,
+  fontSize,
+  gray1,
+  gray2,
+  gray5,
+  textColor1,
+} from './Styles';
 
 //Function-based component with implicit return
 export const Header = () => {
@@ -41,6 +48,9 @@ export const Header = () => {
         placeholder="Search..."
         onChange={handleSearchInputChange}
         css={css`
+          ::placeholder {
+            color: ${textColor1};
+          }
           box-sizing: border-box;
           font-family: ${fontFamily};
           font-size: ${fontSize};

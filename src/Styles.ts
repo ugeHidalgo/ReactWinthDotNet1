@@ -10,6 +10,8 @@ export const gray6 = '#f7f8fa';
 export const primary1 = '#681c41';
 export const primary2 = '#824c67';
 
+export const textColor1 = '#dcdada';
+
 export const accent1 = '#dbb365';
 export const accent2 = '#efd197';
 
@@ -36,4 +38,12 @@ export const PrimaryButton = styled.button`
     opacity: 0.5;
     cursor: not-allowed;
   }
+`;
+
+export const PrimaryTitle = styled.h2`
+  font-size: 15px;
+  font-weight: bold;
+  margin: 10px 0px 5px;
+  text-align: center;
+  text-transform: uppercase;
 `;
