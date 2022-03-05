@@ -1,10 +1,12 @@
-import { check } from 'prettier';
-import React, { useEffect, useState } from 'react';
+/** @jsxImportSource @emotion/react */
+import { css } from '@emotion/react';
+import React, { useState } from 'react';
 import { CheckBox } from './CheckBox';
 import { Page } from './Page';
 import { PageTitle } from './PageTitle';
 import { getUnansweredQuestions, QuestionData } from './QuestionData';
 import { QuestionList } from './QuestionList';
+import { PrimaryButton } from './Styles';
 
 export const HomePage = () => {
   const [questions, setQuestions] = useState<QuestionData[]>([]);
@@ -16,7 +18,7 @@ export const HomePage = () => {
 
   React.useEffect(() => {
     const doGetUnansweredQuestions = async () => {
-      console.log('Getting unansweredqeustions');
+      console.log('Getting unanswered questions');
       const unAnsweredQuestions = await getUnansweredQuestions();
       setQuestions(unAnsweredQuestions);
       setQuestionsLoading(false);
@@ -27,9 +29,17 @@ export const HomePage = () => {
   return (
     <div>
       <Page>
-        <div>
+        <div
+          css={css`
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+          `}
+        >
           <PageTitle>Unanswered questions</PageTitle>
-          <button onClick={clickQuestionButton}>Ask a question</button>
+          <PrimaryButton onClick={clickQuestionButton}>
+            Ask a question
+          </PrimaryButton>
           <CheckBox label="My checkbox" />
         </div>
         {questionsLoading ? (
