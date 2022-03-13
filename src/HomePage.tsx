@@ -1,6 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { CheckBox } from './CheckBox';
 import { Page } from './Page';
 import { PageTitle } from './PageTitle';
@@ -12,8 +13,10 @@ export const HomePage = () => {
   const [questions, setQuestions] = useState<QuestionData[]>([]);
   const [questionsLoading, setQuestionsLoading] = useState(true);
 
-  const clickQuestionButton = () => {
-    console.log('Changing button state.');
+  const navigate = useNavigate();
+  const handleAskQuestionClick = () => {
+    console.log('Navigation to ask page.');
+    navigate('ask');
   };
 
   React.useEffect(() => {
@@ -37,7 +40,7 @@ export const HomePage = () => {
           `}
         >
           <PageTitle>Unanswered questions</PageTitle>
-          <PrimaryButton onClick={clickQuestionButton}>
+          <PrimaryButton onClick={handleAskQuestionClick}>
             Ask a question
           </PrimaryButton>
           <CheckBox label="My checkbox" />
