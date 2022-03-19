@@ -15,7 +15,7 @@ export const UgeFooter = () => {
           <a href="https://www.facebook.com/UgeHidalgo/">
             <i className="icon ion-social-facebook"></i>
           </a>
-          <a href="#">
+          <a href="https://www.twitter.com/UgeHidalgo/">
             <i className="icon ion-social-twitter"></i>
           </a>
           <a href="https://www.instagram.com/ugehidalgo/">
