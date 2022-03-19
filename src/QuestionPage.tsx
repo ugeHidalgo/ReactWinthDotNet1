@@ -4,6 +4,7 @@ import { gray3, gray6 } from './Styles';
 import { useParams } from 'react-router-dom';
 import { Page } from './Page';
 import { getQuestion, QuestionData } from './QuestionData';
+import { AnswerList } from './AnswerList';
 import React from 'react';
 
 export const QuestionPage = () => {
@@ -60,6 +61,7 @@ export const QuestionPage = () => {
               ${question.created.toLocaleDateString()} 
               ${question.created.toLocaleTimeString()}`}
             </div>
+            <AnswerList data={question.answers} />
           </React.Fragment>
         )}
       </div>
