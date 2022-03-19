@@ -9,6 +9,7 @@ import { SearchPage } from './SearchPage';
 import { AskPage } from './AskPage';
 import { NotFoundPage } from './NotFoundPage';
 import { QuestionPage } from './QuestionPage';
+import { UgeHomePage } from './UgeTest/UgeHomePage';
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
           <Route path="ask" element={<AskPage />} />
           <Route path="signin" element={<SignInPage />} />
           <Route path="questions/:questionId" element={<QuestionPage />} />
+          <Route path="ugehome" element={<UgeHomePage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </div>
