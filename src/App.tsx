@@ -6,10 +6,12 @@ import { HomePage } from './HomePage';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { SignInPage } from './SignInPage';
 import { SearchPage } from './SearchPage';
-import { AskPage } from './AskPage';
+import React from 'react';
 import { NotFoundPage } from './NotFoundPage';
 import { QuestionPage } from './QuestionPage';
 import { UgeHomePage } from './UgeTest/UgeHomePage';
+//This import is for lazy load of the AskPage
+const AskPage = React.lazy(() => import('./AskPage'));
 
 function App() {
   return (
@@ -25,7 +27,25 @@ function App() {
         <Routes>
           <Route path="" element={<HomePage />} />
           <Route path="search" element={<SearchPage />} />
-          <Route path="ask" element={<AskPage />} />
+          <Route
+            path="ask"
+            element={
+              <React.Suspense
+                fallback={
+                  <div
+                    css={css`
+                      margin-top: 100px;
+                      text-align: canter;
+                    `}
+                  >
+                    Loading...
+                  </div>
+                }
+              >
+                <AskPage />
+              </React.Suspense>
+            }
+          />
           <Route path="signin" element={<SignInPage />} />
           <Route path="questions/:questionId" element={<QuestionPage />} />
           <Route path="ugehome" element={<UgeHomePage />} />
