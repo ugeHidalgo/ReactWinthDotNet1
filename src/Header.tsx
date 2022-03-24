@@ -1,6 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import React from 'react';
+import { useForm, SubmitHandler } from 'react-hook-form';
 import { Link, useSearchParams } from 'react-router-dom';
 import { UserIcon } from './Icons';
 import {
@@ -12,19 +13,19 @@ import {
   textColor1,
 } from './Styles';
 
+//For React-hook-form use
+interface IFormData {
+  search: string;
+}
+
 //Function-based component with implicit return
 export const Header = () => {
   const [searchParams] = useSearchParams();
   const criteria = searchParams.get('criteria') || '';
-  const [search, setSearch] = React.useState(criteria);
 
-  const handleSearchInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearch(e.currentTarget.value);
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log('Search is: ' + search);
+  const { register, handleSubmit } = useForm<IFormData>();
+  const onSubmit: SubmitHandler<IFormData> = (data) => {
+    console.log(data);
   };
 
   return (
@@ -54,12 +55,12 @@ export const Header = () => {
       >
         Q & A{' '}
       </Link>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <input
+          {...register('search')}
           type="text"
           placeholder="Search..."
-          value={search}
-          onChange={handleSearchInputChange}
+          defaultValue={criteria}
           css={css`
             ::placeholder {
               color: ${textColor1};
