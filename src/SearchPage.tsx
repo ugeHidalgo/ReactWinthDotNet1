@@ -22,6 +22,7 @@ export const SearchPage = () => {
     const doSearch = async (criteria: string) => {
       const foundResults = await searchQuestions(criteria);
       setQuestions(foundResults);
+      console.log(`Found ${foundResults.length} coincidences.`);
     };
     doSearch(search);
   }, [search]);

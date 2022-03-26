@@ -2,7 +2,7 @@
 import { css } from '@emotion/react';
 import React from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { Link, useSearchParams } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { UserIcon } from './Icons';
 import {
   fontFamily,
@@ -20,12 +20,15 @@ interface IFormData {
 
 //Function-based component with implicit return
 export const Header = () => {
+  const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const criteria = searchParams.get('criteria') || '';
 
   const { register, handleSubmit } = useForm<IFormData>();
-  const onSubmit: SubmitHandler<IFormData> = (data) => {
-    console.log(data);
+
+  const onSubmit: SubmitHandler<IFormData> = (searchData) => {
+    console.log(`searching with "${searchData.search}" criteria.`);
+    navigate(`search?criteria=${searchData.search}`);
   };
 
   return (
