@@ -2,6 +2,7 @@
 import { css } from '@emotion/react';
 import {
   FieldContainer,
+  FieldError,
   Fieldlabel,
   FieldSet,
   FieldTextArea,
@@ -23,7 +24,12 @@ interface IFormData {
 
 export const QuestionPage = () => {
   const [question, setQuestion] = React.useState<QuestionData | null>(null);
-  const { register } = useForm<IFormData>();
+  const {
+    register,
+    formState: { errors },
+  } = useForm<IFormData>({
+    mode: 'onBlur',
+  });
   const { questionId } = useParams();
   React.useEffect(() => {
     const doGetQuestion = async (questionId: number) => {
@@ -85,8 +91,17 @@ export const QuestionPage = () => {
               <FieldSet>
                 <FieldContainer>
                   <Fieldlabel htmlFor="content">Your Answer</Fieldlabel>
-                  <FieldTextArea {...register('content')} id="content" />
+                  <FieldTextArea
+                    {...register('content', { required: true, minLength: 50 })}
+                    id="content"
+                  />
                 </FieldContainer>
+                {errors.content?.type === 'required' && (
+                  <FieldError>Campo obligatorio.</FieldError>
+                )}
+                {errors.content?.type === 'minLength' && (
+                  <FieldError>Longitud mínima de 50 caracteres.</FieldError>
+                )}
                 <FormButtonContainer>
                   <PrimaryButton type="submit">
                     Submit Your Answer

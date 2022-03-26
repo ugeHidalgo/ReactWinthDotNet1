@@ -28,7 +28,6 @@ export const AskPage = () => {
 
   const onSubmit: SubmitHandler<IFormData> = (data) => {
     console.log(data);
-    console.log(errors);
   };
 
   return (
@@ -42,12 +41,10 @@ export const AskPage = () => {
               id="title"
             />
             {errors.title?.type === 'required' && (
-              <FieldError>El título es necesario</FieldError>
+              <FieldError>Campo obligatorio.</FieldError>
             )}
             {errors.title?.type === 'minLength' && (
-              <FieldError>
-                La longitud mínima del título debe ser 10 caracteres.
-              </FieldError>
+              <FieldError>Longitud mínima de 50 caracteres.</FieldError>
             )}
           </FieldContainer>
 
@@ -58,7 +55,7 @@ export const AskPage = () => {
               id="content"
             />
             {errors.content?.type === 'required' && (
-              <FieldError>A content is required</FieldError>
+              <FieldError>Campo obligatorio.</FieldError>
             )}
           </FieldContainer>
           <FormButtonContainer>
