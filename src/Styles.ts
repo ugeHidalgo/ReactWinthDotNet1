@@ -1,3 +1,4 @@
+import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
 export const gray1 = '#383737';
@@ -46,4 +47,76 @@ export const PrimaryTitle = styled.h2`
   margin: 10px 0px 5px;
   text-align: center;
   text-transform: uppercase;
+`;
+
+export const FieldSet = styled.fieldset`
+  margin: 10px auto 0 auto;
+  padding: 30px;
+  width: 350px;
+  background-color: ${gray6};
+  border-radius: 4px;
+  border: 1px solid ${gray5};
+  box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.16);
+`;
+
+export const FieldContainer = styled.div`
+  margin-bottom: 10px;
+`;
+
+export const Fieldlabel = styled.label`
+  font-weight: bold;
+`;
+
+//Common styles to element styles
+const baseFieldCSS = css`
+  box-sizing: border-box;
+  font-family: ${fontFamily};
+  font-size: ${fontSize};
+  margin-bottom: 5px;
+  padding: 8px 10px;
+  border: 1px solid ${gray5};
+  border-radius: 3px;
+  color: ${gray2};
+  background-color: white;
+  width: 100%;
+  :focus {
+    outline-color: ${gray5};
+  }
+  :disabled {
+    background-color: ${gray6};
+  }
+`;
+
+export const FieldInput = styled.input`
+  ${baseFieldCSS}
+`;
+
+export const FieldTextArea = styled.textarea`
+  ${baseFieldCSS}
+  height: 100px;
+`;
+
+export const FieldError = styled.div`
+  font-size: 12px;
+  color: red;
+`;
+
+export const FormButtonContainer = styled.div`
+  margin: 30px 0px 0px 0px;
+  padding: 20px 0px 0px 0px;
+  border-top: 1px solid ${gray5};
+`;
+
+const baseSubmissionCSS = css`
+  margin-top: 10px;
+`;
+
+export const SubmissionSuccess = styled.div`
+  ${baseSubmissionCSS}
+  color: green;
+`;
+
+export const SubmissionFailure = styled.div`
+  ${baseSubmissionCSS}
+  color: red;
 `;
