@@ -20,10 +20,14 @@ interface IFormData {
 
 //Function-based component with implicit return
 export const Header = () => {
+  //Navigation
   const navigate = useNavigate();
+
+  //Screen parameters
   const [searchParams] = useSearchParams();
   const criteria = searchParams.get('criteria') || '';
 
+  //React-hook-form
   const { register, handleSubmit } = useForm<IFormData>();
 
   const onSubmit: SubmitHandler<IFormData> = (searchData) => {
