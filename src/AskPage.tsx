@@ -1,5 +1,7 @@
+import React from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Page } from './Page';
+import { postQuestions } from './QuestionData';
 import {
   FieldContainer,
   FieldError,
@@ -9,6 +11,7 @@ import {
   FieldTextArea,
   FormButtonContainer,
   PrimaryButton,
+  SubmissionSuccess,
 } from './Styles';
 
 //For React-hook-form use
@@ -18,22 +21,34 @@ interface IFormData {
 }
 
 export const AskPage = () => {
+  //States
+  const [successfullySubmitted, setSuccessfullySubmitted] =
+    React.useState(false);
+
+  //React-hook-form
   const {
     register,
-    formState: { errors },
+    formState: { errors, isSubmitting },
     handleSubmit,
   } = useForm<IFormData>({
     mode: 'onBlur',
   });
 
-  const onSubmit: SubmitHandler<IFormData> = (data) => {
-    console.log(data);
+  const onSubmit: SubmitHandler<IFormData> = async (data) => {
+    console.log(`onSubmit askPage-received data: ${data}`);
+    const result = await postQuestions({
+      title: data.title,
+      content: data.content,
+      userName: 'Fred',
+      created: new Date(),
+    });
+    setSuccessfullySubmitted(result ? true : false);
   };
 
   return (
     <Page title="Ask a question">
       <form onSubmit={handleSubmit(onSubmit)}>
-        <FieldSet>
+        <FieldSet disabled={isSubmitting || successfullySubmitted}>
           <FieldContainer>
             <Fieldlabel htmlFor="title">Title</Fieldlabel>
             <FieldInput
@@ -61,6 +76,11 @@ export const AskPage = () => {
           <FormButtonContainer>
             <PrimaryButton type="submit">Submit your question</PrimaryButton>
           </FormButtonContainer>
+          {successfullySubmitted && (
+            <SubmissionSuccess>
+              Your question was successfully submitted.
+            </SubmissionSuccess>
+          )}
         </FieldSet>
       </form>
     </Page>
