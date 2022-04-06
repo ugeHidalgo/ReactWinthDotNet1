@@ -1,6 +1,7 @@
+import { combineReducers, createStore, Store } from 'redux';
 import { QuestionData } from './QuestionData';
 
-interface QuestionState {
+interface QuestionsState {
   readonly loading: boolean;
   readonly unanswered: QuestionData[];
   readonly viewing: QuestionData | null;
@@ -8,10 +9,10 @@ interface QuestionState {
 }
 
 export interface AppState {
-  readonly questions: QuestionState;
+  readonly questions: QuestionsState;
 }
 
-const intialQuestionState: Questionstate = {
+const initialQuestionState: QuestionsState = {
   loading: false,
   unanswered: [],
   viewing: null,
@@ -34,12 +35,12 @@ const intialQuestionState: Questionstate = {
 export const GettingUnansweredQuestions = 'GettingUnansweredQuestions';
 export const GotUnansweredQuestions = 'GotUnansweredQuestions';
 
-export const gettingUnansweredQuestions = () =>
+export const gettingUnansweredQuestionsAction = () =>
   ({
     type: GettingUnansweredQuestions,
   } as const);
 
-export const gotUnansweredQuestions = (questions: QuestionData[]) =>
+export const gotUnansweredQuestionsAction = (questions: QuestionData[]) =>
   ({
     type: GotUnansweredQuestions,
     questions: questions,
@@ -54,12 +55,12 @@ export const gotUnansweredQuestions = (questions: QuestionData[]) =>
 export const GettingQuestion = 'GettingQuestion';
 export const GotQuestion = 'GotQuestion';
 
-export const gettingQuestion = () =>
+export const gettingQuestionAction = () =>
   ({
     type: GettingQuestion,
   } as const);
 
-export const gotQuestion = (question: QuestionData | null) =>
+export const gotQuestionAction = (question: QuestionData | null) =>
   ({
     type: GotQuestion,
     question: question,
@@ -71,19 +72,84 @@ export const gotQuestion = (question: QuestionData | null) =>
 //  The request to the server is made
 //  When the response returns the data is set into searched and loading is set to false.
 // Two state changes => 2 actions
-export const SearchingQuestion = 'SearchingQuestion';
-export const SearchedQuestion = 'SearchedQuestion';
+export const SearchingQuestions = 'SearchingQuestions';
+export const SearchedQuestions = 'SearchedQuestions';
 
-export const searchingQuestion = () =>
+export const searchingQuestionsAction = () =>
   ({
-    type: SearchingQuestion,
+    type: SearchingQuestions,
   } as const);
 
-export const searchedQuestion = (searched: QuestionData[]) =>
+export const searchedQuestionsAction = (searched: QuestionData[]) =>
   ({
-    type: SearchedQuestion,
+    type: SearchedQuestions,
     searched: searched,
   } as const);
 
 //Reducers
 //-------
+type QuestionsActions =
+  | ReturnType<typeof gettingUnansweredQuestionsAction>
+  | ReturnType<typeof gotUnansweredQuestionsAction>
+  | ReturnType<typeof gettingQuestionAction>
+  | ReturnType<typeof gotQuestionAction>
+  | ReturnType<typeof searchingQuestionsAction>
+  | ReturnType<typeof searchedQuestionsAction>;
+
+const questionsReducer = (
+  state = initialQuestionState,
+  action: QuestionsActions,
+) => {
+  switch (action.type) {
+    case GettingUnansweredQuestions: {
+      return {
+        ...state,
+        loading: true,
+      };
+    }
+    case GotUnansweredQuestions: {
+      return {
+        ...state,
+        loading: false,
+        unanswered: action.questions,
+      };
+    }
+    case GettingQuestion: {
+      return {
+        ...state,
+        loading: true,
+        viewing: null,
+      };
+    }
+    case GotQuestion: {
+      return {
+        ...state,
+        loading: false,
+        viewing: action.question,
+      };
+    }
+    case SearchingQuestions: {
+      return {
+        ...state,
+        loading: true,
+        searched: [],
+      };
+    }
+    case SearchedQuestions: {
+      return {
+        ...state,
+        loading: false,
+        searched: action.searched,
+      };
+    }
+  }
+  return state;
+};
+
+//Store
+const rootReducer = combineReducers<AppState>({ questions: questionsReducer });
+
+export function configureStore(): Store<AppState> {
+  const store = createStore(rootReducer, undefined);
+  return store;
+}
