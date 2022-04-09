@@ -21,12 +21,12 @@ const initialQuestionState: QuestionsState = {
 
 //Actions
 //-------
-//Three main processes:
+//Three main processes and two actions per proccess:
 //  Fetching and rendering unanswerd questions on the home page.
 //  Fetching and rendering the question being viewed on the question page.
 //  Searching questions and showing the matches on the search page.
 
-//Fetching and rendering unanswerd questions on the home page:
+//1 - Fetching and rendering unanswerd questions on the home page:
 //Process:
 //  When the process starts, loading is set to true
 //  The request to the server is made
@@ -46,7 +46,7 @@ export const gotUnansweredQuestionsAction = (questions: QuestionData[]) =>
     questions: questions,
   } as const);
 
-//Fetching and rendering the question being viewed on the question page:
+//2 - Fetching and rendering the question being viewed on the question page:
 //Process:
 //  When the process starts, loading is set to true
 //  The request to the server is made
@@ -66,7 +66,7 @@ export const gotQuestionAction = (question: QuestionData | null) =>
     question: question,
   } as const);
 
-//Searching questions and showing the matches on the search page:
+//3 - Searching questions and showing the matches on the search page:
 //Process:
 //  When the process starts, loading is set to true
 //  The request to the server is made
@@ -86,7 +86,7 @@ export const searchedQuestionsAction = (searched: QuestionData[]) =>
     searched: searched,
   } as const);
 
-//Reducers
+//Reducer
 //-------
 type QuestionsActions =
   | ReturnType<typeof gettingUnansweredQuestionsAction>

@@ -5,13 +5,24 @@ import { useNavigate } from 'react-router-dom';
 import { CheckBox } from './CheckBox';
 import { Page } from './Page';
 import { PageTitle } from './PageTitle';
-import { getUnansweredQuestions, QuestionData } from './QuestionData';
+import { getUnansweredQuestions } from './QuestionData';
 import { QuestionList } from './QuestionList';
 import { PrimaryButton } from './Styles';
+import { useSelector, useDispatch } from 'react-redux';
+import {
+  gettingUnansweredQuestionsAction,
+  gotUnansweredQuestionsAction,
+  AppState,
+} from './Store';
 
 export const HomePage = () => {
-  const [questions, setQuestions] = useState<QuestionData[]>([]);
-  const [questionsLoading, setQuestionsLoading] = useState(true);
+  const dispatch = useDispatch();
+  const questions = useSelector(
+    (state: AppState) => state.questions.unanswered,
+  );
+  const questionsLoading = useSelector(
+    (state: AppState) => state.questions.loading,
+  );
 
   const navigate = useNavigate();
   const handleAskQuestionClick = () => {
@@ -22,12 +33,13 @@ export const HomePage = () => {
   React.useEffect(() => {
     const doGetUnansweredQuestions = async () => {
       console.log('Getting unanswered questions');
+      dispatch(gettingUnansweredQuestionsAction());
       const unAnsweredQuestions = await getUnansweredQuestions();
-      setQuestions(unAnsweredQuestions);
-      setQuestionsLoading(false);
+      dispatch(gotUnansweredQuestionsAction(unAnsweredQuestions));
       console.log('Initializing button state.');
     };
     doGetUnansweredQuestions();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <div>
