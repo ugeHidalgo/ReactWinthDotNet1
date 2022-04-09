@@ -14,10 +14,12 @@ import {
 } from './Styles';
 import { useParams } from 'react-router-dom';
 import { Page } from './Page';
-import { getQuestion, QuestionData, postAnswer } from './QuestionData';
+import { getQuestion, postAnswer } from './QuestionData';
 import { AnswerList } from './AnswerList';
 import React from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { useSelector, useDispatch } from 'react-redux';
+import { gettingQuestionAction, gotQuestionAction, AppState } from './Store';
 
 interface IFormData {
   content: string;
@@ -25,7 +27,8 @@ interface IFormData {
 
 export const QuestionPage = () => {
   //states
-  const [question, setQuestion] = React.useState<QuestionData | null>(null);
+  const dispatch = useDispatch();
+  const question = useSelector((state: AppState) => state.questions.viewing);
   const [successfullySubmitted, setSuccessfullySubmitted] =
     React.useState(false);
 
@@ -53,8 +56,9 @@ export const QuestionPage = () => {
   const { questionId } = useParams();
   React.useEffect(() => {
     const doGetQuestion = async (questionId: number) => {
+      dispatch(gettingQuestionAction());
       const foundQuestion = await getQuestion(questionId);
-      setQuestion(foundQuestion);
+      dispatch(gotQuestionAction(foundQuestion));
     };
     if (questionId) {
       doGetQuestion(Number(questionId));
